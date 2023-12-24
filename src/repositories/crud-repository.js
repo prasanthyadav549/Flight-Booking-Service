@@ -45,6 +45,7 @@ class CrudRepository {
         id: id,
       },
     });
+    return response;
   }
 
   async getAll() {
