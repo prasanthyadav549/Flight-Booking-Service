@@ -1,6 +1,6 @@
 const { BookingRepository } = require("../repositories");
 const { StatusCodes } = require("http-status-codes");
-const { ServerConfig } = require("../config");
+const { ServerConfig, Queue } = require("../config");
 const axios = require("axios");
 const { Enums } = require("../utils/common");
 const db = require("../models");
@@ -81,6 +81,11 @@ async function makePayment(data) {
       { status: BOOKED },
       transaction
     );
+    Queue.sendData({
+      recipientEmail: "prasanthref07@gmail.com",
+      subject: "Flight Booked",
+      text: `Booking successfully done for the booking ${data.bookingId}`,
+    });
     await transaction.commit();
   } catch (err) {
     console.log("error in bookingService", err);

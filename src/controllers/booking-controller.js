@@ -3,6 +3,7 @@ const { StatusCodes } = require("http-status-codes");
 const { ErrorResponse, SuccessResponse } = require("../utils/common");
 
 const inMemoDb = {};
+
 async function createBooking(req, res) {
   try {
     console.log("flightId:", req.body);
@@ -29,6 +30,7 @@ async function createBooking(req, res) {
  */
 async function makePayment(req, res) {
   try {
+    console.log("the items in the dictionary are ", Object.keys(inMemoDb));
     const idempotencyKey = req.headers["x-idempotency-key"];
     if (!idempotencyKey) {
       return res
